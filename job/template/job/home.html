@@ -5,13 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Pop HTML5 Template</title>
+    <title>Result Processing System</title>
 <!--
-
 Template 2097 Pop
-
 http://www.tooplate.com/view/2097-pop
-
 -->
     <!-- load CSS -->
     <link rel="stylesheet" href="{% static "https://fonts.googleapis.com/css?family=Open+Sans:300" %}">  <!-- Google web font "Open Sans" -->
@@ -19,7 +16,8 @@ http://www.tooplate.com/view/2097-pop
     <link rel="stylesheet" href="{% static "fontawesome/css/fontawesome-all.min.css" %}">                <!-- https://fontawesome.com/ -->
     <link rel="stylesheet" type="text/css" href="{% static "slick/slick.css" %}">                       <!-- http://kenwheeler.github.io/slick/ -->
     <link rel="stylesheet" type="text/css" href="{% static "slick/slick-theme.css" %}">
-    <link rel="stylesheet" href="{% static "css/tooplate-style.css" %}">                               <!-- Templatemo style -->
+    <link rel="stylesheet" href="{% static "css/tooplate-style.css" %}">
+                             <!-- Templatemo style -->
 
     <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this in a modern browser such as latest version of Chrome or Microsoft Edge.");</script>
     <style>
@@ -36,6 +34,7 @@ http://www.tooplate.com/view/2097-pop
                     <div class="col-sm-12 col-md-6 col-lg-6 col-md-col-xl-6 mb-md-0 mb-sm-4 mb-4 tm-site-header-col">
                         <div class="tm-site-header">
                             <h1 class="mb-4" ><b>Result Processing System</b></h1>
+                          <br><p style="color:red"><b>{{ error_message }}</b></p>
                             <img src="{% static "img/underline.png" %}" class="img-fluid mb-4">
 
                         </div>
@@ -114,6 +113,7 @@ http://www.tooplate.com/view/2097-pop
                                                               <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                 <input type="text" id="contact_name" name="enroll_no" class="form-control" placeholder="Enrollment Number"  required/>
                                                               </div>
+
                                                             </div>
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
@@ -170,6 +170,10 @@ http://www.tooplate.com/view/2097-pop
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 tm-col-email">
                                                                   <input type="text" id="contact_email" name="sub_no" class="form-control" placeholder="Subject Code"  required/>
                                                                 </div>
+
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="student_scheme" class="form-control" placeholder="Student Scheme"  required/>
+                                                                </div>
                                                             </div>
 
 
@@ -178,7 +182,7 @@ http://www.tooplate.com/view/2097-pop
                                                                   <label for="cars"><h5>Scheme ::</h5></label>
                                                                   <select id="cars" name="sub_scheme_no">
                                                                     {% for element in scheme_no_list.all %}
-                                                                    <option value="{{ element.scheme_no }}" >{{ element.scheme_no }}</option>
+                                                                    <option value="{{ element.scheme_no }}" >{{ element.theory_cr }} + {{ element.practical_cr }}</option>
                                                                     {% endfor %}
                                                                   </select>
 
@@ -266,9 +270,11 @@ http://www.tooplate.com/view/2097-pop
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <label for="cars"><h5>Theory Credit ::</h5></label>
                                                                   <select id="cars" name="theory_cr">
+                                                                    <option value="0" >0</option>
                                                                     <option value="1" >1</option>
                                                                     <option value="2">2</option>
                                                                     <option value="3">3</option>
+                                                                    <option value="4" >4</option>
 
                                                                   </select>
 
@@ -281,9 +287,11 @@ http://www.tooplate.com/view/2097-pop
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <label for="cars"><h5>Practical Credit::</h5></label>
                                                                   <select id="cars" name="practical_cr">
+                                                                    <option value="0" >0</option>
                                                                     <option value="1" >1</option>
                                                                     <option value="2">2</option>
                                                                     <option value="3">3</option>
+                                                                    <option value="4" >4</option>
 
                                                                   </select>
 
@@ -292,36 +300,24 @@ http://www.tooplate.com/view/2097-pop
                                                             </div>
 
 
-                                                            <div class="row">
+                                                            <!-- <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <label for="cars"><h5>Max_Theory::</h5></label>
                                                                   <select id="cars" name="max_th">
                                                                     <option value="0" >0</option>
                                                                     <option value="50">50</option>
                                                                     <option value="80">80</option>
-
                                                                   </select>
-
-
                                                                 </div>
                                                             </div>
-
-
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <label for="cars"><h5>Max_mid_term ::</h5></label>
                                                                   <select id="cars" name="max_mid">
                                                                     <option value="20" >20</option>
-
-
                                                                   </select>
-
-
                                                                 </div>
                                                             </div>
-
-
-
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <label for="cars"><h5>Max_Practical ::</h5></label>
@@ -329,12 +325,9 @@ http://www.tooplate.com/view/2097-pop
                                                                     <option value="0" >0</option>
                                                                     <option value="30">30</option>
                                                                     <option value="80">80</option>
-
                                                                   </select>
-
-
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
 
                                                             <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
                                                         </form>
@@ -369,6 +362,7 @@ http://www.tooplate.com/view/2097-pop
                                                                   <input type="text" id="contact_name" name="marks_enroll_no" class="form-control" placeholder="Enrollment Number"  required/>
                                                                 </div>
                                                               </div>
+
                                                               <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 ">
                                                                   <label for="cars"><h5>Subject No ::</h5></label>
@@ -380,6 +374,7 @@ http://www.tooplate.com/view/2097-pop
                                                                   </select>
                                                                 </div>
                                                             </div>
+
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                                                   <input type="text" id="contact_name" name="th" class="form-control" placeholder="Theory"  required/>
@@ -387,14 +382,17 @@ http://www.tooplate.com/view/2097-pop
                                                               </div>
                                                               <div class="row">
                                                                   <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                                                    <input type="text" id="contact_name" name="pr" class="form-control" placeholder="Practical"  required/>
+
+                                                                    <input type="text"  id="contact_name" name="pr" class="form-control" placeholder="Practical"  required/>
                                                                   </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                                                      <input type="text" id="contact_name" name="mid" class="form-control" placeholder="Mid Term"  required/>
+                                                                      <input type="text"  id="contact_name" name="mid" class="form-control" placeholder="Mid Term"  required/>
                                                                     </div>
                                                                   </div>
+
+
 
                                                             <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
                                                         </form>
@@ -422,12 +420,34 @@ http://www.tooplate.com/view/2097-pop
 
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <form action="index.html" method="post" class="contact-form">
+                                                        <form action="{% url 'result_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                                                  <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Enrollment Number"  required/>
+                                                                  <input type="text" id="contact_name" name="result_enroll" class="form-control" placeholder="Enrollment Number"  required/>
                                                                 </div>
 
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Semester ::</h5></label>
+                                                                  <select id="cars" name="Sem">
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2" >2</option>
+                                                                    <option value="3" >3</option>
+                                                                    <option value="4" >4</option>
+                                                                    <option value="5" >5</option>
+                                                                    <option value="6" >6</option>
+                                                                    <option value="7" >7</option>
+                                                                    <option value="8" >8</option>
+
+
+
+                                                                  </select>
+
+
+                                                                </div>
                                                             </div>
 
                                                             <button type="submit" class="btn btn-primary tm-btn-submit">Submit</button>
@@ -444,9 +464,7 @@ http://www.tooplate.com/view/2097-pop
                 </div>
             </div>
             <footer>
-                <p class="small tm-copyright-text">Copyright &copy; <span class="tm-current-year">2018</span> Your Company.
-
-                Layout: Tooplate</p>
+                <p class="small tm-copyright-text">Rsult Processing System &copy; <span class="tm-current-year">2020</span> Project Prtner : Amit Saini | Hema Bhagnani | Muskan Paliwal</p>
             </footer>
         </div> <!-- .tm-main-content -->
     </div>
@@ -455,6 +473,7 @@ http://www.tooplate.com/view/2097-pop
     <script src="{% static "slick/slick.min.js" %}"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
     <script src="{% static "js/anime.min.js" %}"></script>                     <!-- http://animejs.com/ -->
     <script src="{% static "js/main.js" %}"></script>
+
     <script>
 
         function setupFooter() {
@@ -482,7 +501,10 @@ http://www.tooplate.com/view/2097-pop
 
             $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
         });
-
+//
+// {% if error_message %}
+//         alert( '{{ error_message }} ');
+// {% endif %}
     </script>
 
 </body>
