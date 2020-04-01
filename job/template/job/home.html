@@ -5,13 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Pop HTML5 Template</title>
+    <title>Result Processing System</title>
 <!--
-
 Template 2097 Pop
-
 http://www.tooplate.com/view/2097-pop
-
 -->
     <!-- load CSS -->
     <link rel="stylesheet" href="{% static "https://fonts.googleapis.com/css?family=Open+Sans:300" %}">  <!-- Google web font "Open Sans" -->
@@ -19,10 +16,13 @@ http://www.tooplate.com/view/2097-pop
     <link rel="stylesheet" href="{% static "fontawesome/css/fontawesome-all.min.css" %}">                <!-- https://fontawesome.com/ -->
     <link rel="stylesheet" type="text/css" href="{% static "slick/slick.css" %}">                       <!-- http://kenwheeler.github.io/slick/ -->
     <link rel="stylesheet" type="text/css" href="{% static "slick/slick-theme.css" %}">
-    <link rel="stylesheet" href="{% static "css/tooplate-style.css" %}">                               <!-- Templatemo style -->
+    <link rel="stylesheet" href="{% static "css/tooplate-style.css" %}">
+                             <!-- Templatemo style -->
 
     <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this in a modern browser such as latest version of Chrome or Microsoft Edge.");</script>
+    <style>
 
+    </style>
 </head>
 
 <body >
@@ -34,6 +34,7 @@ http://www.tooplate.com/view/2097-pop
                     <div class="col-sm-12 col-md-6 col-lg-6 col-md-col-xl-6 mb-md-0 mb-sm-4 mb-4 tm-site-header-col">
                         <div class="tm-site-header">
                             <h1 class="mb-4" ><b>Result Processing System</b></h1>
+                          <br><p style="color:red">{{ error_message }}</p>
                             <img src="{% static "img/underline.png" %}" class="img-fluid mb-4">
 
                         </div>
@@ -59,14 +60,15 @@ http://www.tooplate.com/view/2097-pop
 
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <form action="index.html" method="post" class="contact-form">
+                                                        <form action="{% url 'dept_form' %}" method="post" class="contact-form">
+                                                            {% csrf_token %}
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                                                  <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Name"  required/>
+                                                                  <input type="text" id="contact_name" name="dept_name" class="form-control" placeholder="Name"  required/>
                                                                 </div>
 
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6 tm-col-email">
-                                                                  <input type="text" id="contact_email" name="contact_email" class="form-control" placeholder="Department Number"  required/>
+                                                                  <input type="text" id="contact_email" name="dept_no" class="form-control" placeholder="Department Number"  required/>
                                                                 </div>
                                                             </div>
 
@@ -87,25 +89,53 @@ http://www.tooplate.com/view/2097-pop
                                             <div class="product__bg"></div>
                                         </div>
                                         <div class="product__description">
-                                            <div class="p-sm-4 p-2">
+                                            <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
                                                 <div class="row mb-3">
                                                     <div class="col-12">
-                                                        <h2 class="tm-page-title">Background of Our Team</h2>
+                                                        <h2 class="tm-page-title">Add New Student</h2>
                                                     </div>
                                                 </div>
-                                                <div class="row tm-reverse-sm">
-                                                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                                        <p class="mb-4">Vestibulum aliquet, arcu accumsan lobortis bibendum, justo velit efficitur lorem, at pulvinar mi justo nec lacus. Nullam et libero aliquet, luctus nunc sit amet, tincidunt ligula. Sed finibus ante sed tortor cursus, nec malesuada lectus interdum.</p>
-                                                        <p class="mb-4">Sed ex turpis, vulputate in efficitur id, lobortis eget nibh. Pellentesque maximus ipsum eget velit imperdiet sodales. Suspendisse in blandit mi.</p>
-                                                        <p class="mb-5">Pellentesque finibus felis risus, ut malesuada felis viverra at. Quisque accumsan in mi non hendrerit.</p>
-                                                        <a href="#" class="btn tm-btn-gray">Read More</a>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-lg-0 mb-sm-4 mb-4">
-                                                        <img src="img/team.jpg" class="img-fluid">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <form action="{% url 'student_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="fname" class="form-control" placeholder="First Name"  required/>
+                                                                </div>
+
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6 tm-col-email">
+                                                                  <input type="text" id="contact_email" name="lname" class="form-control" placeholder="Last Name"  required/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                              <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                <input type="text" id="contact_name" name="enroll_no" class="form-control" placeholder="Enrollment Number"  required/>
+                                                              </div>
+                                                            
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <h5>Department No ::</h5>
+                                                                  <select name="student_dept_no">
+                                                                    {% for element in dept_no_list.all %}
+                                                                    <option value="{{ element.dept_no }}">{{ element.dept_no }}</option>
+                                                                    {% endfor %}
+
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -121,21 +151,80 @@ http://www.tooplate.com/view/2097-pop
                                             <div class="product__bg"></div>
                                         </div>
                                         <div class="product__description">
-                                            <div class="p-sm-4 p-2">
+                                            <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
                                                 <div class="row mb-3">
                                                     <div class="col-12">
-                                                        <h2 class="tm-page-title">Background of Our Team</h2>
+                                                        <h2 class="tm-page-title">Add New Subject</h2>
                                                     </div>
                                                 </div>
-                                                <div class="row tm-reverse-sm">
-                                                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                                        <p class="mb-4">Vestibulum aliquet, arcu accumsan lobortis bibendum, justo velit efficitur lorem, at pulvinar mi justo nec lacus. Nullam et libero aliquet, luctus nunc sit amet, tincidunt ligula. Sed finibus ante sed tortor cursus, nec malesuada lectus interdum.</p>
-                                                        <p class="mb-4">Sed ex turpis, vulputate in efficitur id, lobortis eget nibh. Pellentesque maximus ipsum eget velit imperdiet sodales. Suspendisse in blandit mi.</p>
-                                                        <p class="mb-5">Pellentesque finibus felis risus, ut malesuada felis viverra at. Quisque accumsan in mi non hendrerit.</p>
-                                                        <a href="#" class="btn tm-btn-gray">Read More</a>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-lg-0 mb-sm-4 mb-4">
-                                                        <img src="img/team.jpg" class="img-fluid">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <form action="{% url 'sub_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="sub_name" class="form-control" placeholder="Subject Name"  required/>
+                                                                </div>
+
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6 tm-col-email">
+                                                                  <input type="text" id="contact_email" name="sub_no" class="form-control" placeholder="Subject Code"  required/>
+                                                                </div>
+
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="student_scheme" class="form-control" placeholder="Student Scheme"  required/>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Scheme ::</h5></label>
+                                                                  <select id="cars" name="sub_scheme_no">
+                                                                    {% for element in scheme_no_list.all %}
+                                                                    <option value="{{ element.scheme_no }}" >{{ element.theory_cr }} + {{ element.practical_cr }}</option>
+                                                                    {% endfor %}
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Department No ::</h5></label>
+                                                                  <select id="cars" name="sub_dept_no">
+                                                                    {% for element in dept_no_list.all %}
+                                                                    <option value="{{ element.dept_no }}" >{{ element.dept_no }}</option>
+                                                                    {% endfor %}
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Semester ::</h5></label>
+                                                                  <select id="cars" name="Sem">
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2" >2</option>
+                                                                    <option value="3" >3</option>
+                                                                    <option value="4" >4</option>
+                                                                    <option value="5" >5</option>
+                                                                    <option value="6" >6</option>
+                                                                    <option value="7" >7</option>
+                                                                    <option value="8" >8</option>
+
+
+
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,21 +247,90 @@ http://www.tooplate.com/view/2097-pop
                                             <div class="product__bg"></div>
                                         </div>
                                         <div class="product__description">
-                                            <div class="p-sm-4 p-2">
+                                            <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
                                                 <div class="row mb-3">
                                                     <div class="col-12">
-                                                        <h2 class="tm-page-title">Background of Our Team</h2>
+                                                        <h2 class="tm-page-title">Add Scheme</h2>
                                                     </div>
                                                 </div>
-                                                <div class="row tm-reverse-sm">
-                                                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                                        <p class="mb-4">Vestibulum aliquet, arcu accumsan lobortis bibendum, justo velit efficitur lorem, at pulvinar mi justo nec lacus. Nullam et libero aliquet, luctus nunc sit amet, tincidunt ligula. Sed finibus ante sed tortor cursus, nec malesuada lectus interdum.</p>
-                                                        <p class="mb-4">Sed ex turpis, vulputate in efficitur id, lobortis eget nibh. Pellentesque maximus ipsum eget velit imperdiet sodales. Suspendisse in blandit mi.</p>
-                                                        <p class="mb-5">Pellentesque finibus felis risus, ut malesuada felis viverra at. Quisque accumsan in mi non hendrerit.</p>
-                                                        <a href="#" class="btn tm-btn-gray">Read More</a>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-lg-0 mb-sm-4 mb-4">
-                                                        <img src="img/team.jpg" class="img-fluid">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <form action="{% url 'scheme_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="scheme_no" class="form-control" placeholder="Scheme Number"  required/>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Theory Credit ::</h5></label>
+                                                                  <select id="cars" name="theory_cr">
+                                                                    <option value="0" >0</option>
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4" >4</option>
+
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Practical Credit::</h5></label>
+                                                                  <select id="cars" name="practical_cr">
+                                                                    <option value="0" >0</option>
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4" >4</option>
+
+                                                                  </select>
+
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Max_Theory::</h5></label>
+                                                                  <select id="cars" name="max_th">
+                                                                    <option value="0" >0</option>
+                                                                    <option value="50">50</option>
+                                                                    <option value="80">80</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Max_mid_term ::</h5></label>
+                                                                  <select id="cars" name="max_mid">
+                                                                    <option value="20" >20</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Max_Practical ::</h5></label>
+                                                                  <select id="cars" name="max_pr">
+                                                                    <option value="0" >0</option>
+                                                                    <option value="30">30</option>
+                                                                    <option value="80">80</option>
+                                                                  </select>
+                                                                </div>
+                                                            </div> -->
+
+                                                            <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -188,29 +346,56 @@ http://www.tooplate.com/view/2097-pop
                                             <div class="product__bg"></div>
                                         </div>
                                         <div class="product__description">
-                                            <div class="p-sm-4 p-2">
+                                            <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
                                                 <div class="row mb-3">
                                                     <div class="col-12">
-                                                        <h2 class="tm-page-title">Our Work</h2>
+                                                        <h2 class="tm-page-title">Add Marks</h2>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-12">
-                                                        <p>Aliquam interdum, nisl sed faucibus tempor, massa velit laoreet ipsum, et faucibus sapien magna at enim. Suspendisse a dictum tortor, vel rhoncus libero. Integer at lacus velit. Nullam dapibus venenatis placerat.</p>
-                                                    </div>
-                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <div class="p-sm-4 p-2 tm-img-container">
-                                                            <div class="tm-img-slider" id="tmImgSlider">
-                                                              <img src="img/gallery-img-01-tn.jpg" alt="Image" class="tm-slider-img">
-                                                              <img src="img/gallery-img-02-tn.jpg" alt="Image" class="tm-slider-img">
-                                                              <img src="img/gallery-img-03-tn.jpg" alt="Image" class="tm-slider-img">
-                                                              <img src="img/gallery-img-04-tn.jpg" alt="Image" class="tm-slider-img">
-                                                              <img src="img/gallery-img-05-tn.jpg" alt="Image" class="tm-slider-img">
-                                                              <img src="img/gallery-img-06-tn.jpg" alt="Image" class="tm-slider-img">
+                                                        <form action="{% url 'marks_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="marks_enroll_no" class="form-control" placeholder="Enrollment Number"  required/>
+                                                                </div>
+                                                              </div>
+
+                                                              <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6 ">
+                                                                  <label for="cars"><h5>Subject No ::</h5></label>
+                                                                  <select id="cars" name="marks_sub_no">
+                                                                    {% for element in sub_no_list.all %}
+                                                                    <option value="{{ element.sub_no }}" >{{ element.sub_no }}</option>
+                                                                    {% endfor %}
+
+                                                                  </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="contact_name" name="th" class="form-control" placeholder="Theory"  required/>
+                                                                </div>
+                                                              </div>
+                                                              <div class="row">
+                                                                  <div class="form-group col-md-6 col-lg-6 col-xl-6">
+
+                                                                    <input type="text"  id="contact_name" name="pr" class="form-control" placeholder="Practical"  required/>
+                                                                  </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                      <input type="text"  id="contact_name" name="mid" class="form-control" placeholder="Mid Term"  required/>
+                                                                    </div>
+                                                                  </div>
+
+
+
+                                                            <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -229,28 +414,42 @@ http://www.tooplate.com/view/2097-pop
                                             <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
                                                 <div class="row mb-3">
                                                     <div class="col-12">
-                                                        <h2 class="tm-page-title">Contact Us</h2>
+                                                        <h2 class="tm-page-title">Check Result</h2>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-4">
-                                                    <div class="col-12">
-                                                        <p>Lorem ipsum dolor site amet, consectetur adipiscing elit. Aliquam interdum, nisl sed faucibus tempor, massa velit laoreet ipsum, et faucibus sapien magna at enim. Suspendisse a dictum tortor, vel rhoncus libero.</p>
-                                                    </div>
-                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <form action="index.html" method="post" class="contact-form">
+                                                        <form action="{% url 'result_form' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                                                  <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Name"  required/>
+                                                                  <input type="text" id="contact_name" name="result_enroll" class="form-control" placeholder="Enrollment Number"  required/>
                                                                 </div>
-                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6 tm-col-email">
-                                                                  <input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="Email"  required/>
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <label for="cars"><h5>Semester ::</h5></label>
+                                                                  <select id="cars" name="Sem">
+                                                                    <option value="1" >1</option>
+                                                                    <option value="2" >2</option>
+                                                                    <option value="3" >3</option>
+                                                                    <option value="4" >4</option>
+                                                                    <option value="5" >5</option>
+                                                                    <option value="6" >6</option>
+                                                                    <option value="7" >7</option>
+                                                                    <option value="8" >8</option>
+
+
+
+                                                                  </select>
+
+
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                              <textarea id="contact_message" name="contact_message" class="form-control" rows="9" placeholder="Message" required></textarea>
-                                                            </div>
+
                                                             <button type="submit" class="btn btn-primary tm-btn-submit">Submit</button>
                                                         </form>
                                                     </div>
@@ -265,9 +464,7 @@ http://www.tooplate.com/view/2097-pop
                 </div>
             </div>
             <footer>
-                <p class="small tm-copyright-text">Copyright &copy; <span class="tm-current-year">2018</span> Your Company.
-
-                Layout: Tooplate</p>
+                <p class="small tm-copyright-text">Rsult Processing System &copy; <span class="tm-current-year">2020</span> Project Prtner : Amit Saini | Hema Bhagnani | Muskan Paliwal</p>
             </footer>
         </div> <!-- .tm-main-content -->
     </div>
@@ -276,6 +473,7 @@ http://www.tooplate.com/view/2097-pop
     <script src="{% static "slick/slick.min.js" %}"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
     <script src="{% static "js/anime.min.js" %}"></script>                     <!-- http://animejs.com/ -->
     <script src="{% static "js/main.js" %}"></script>
+
     <script>
 
         function setupFooter() {
@@ -303,7 +501,10 @@ http://www.tooplate.com/view/2097-pop
 
             $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
         });
-
+//
+// {% if error_message %}
+//         alert( '{{ error_message }} ');
+// {% endif %}
     </script>
 
 </body>
