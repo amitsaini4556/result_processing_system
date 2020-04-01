@@ -1,5 +1,4 @@
 """rps URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
 Examples:
@@ -21,5 +20,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',job.views.home,name='home')
+    path('<str:error_message>/',job.views.home,name='home'),
+    path('',job.views.home,name='home'),
+    path('dept_form',job.views.dept_form,name='dept_form'),
+    path('student_form',job.views.student_form,name='student_form'),
+    path('scheme_form',job.views.scheme_form,name='scheme_form'),
+    path('sub_form',job.views.sub_form,name='sub_form'),
+    path('marks_form',job.views.marks_form,name='marks_form'),
+    path('result_form',job.views.result_form,name='result_form'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
