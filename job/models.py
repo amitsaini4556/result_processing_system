@@ -23,6 +23,8 @@ class student(models.Model):
 
 
 
+
+
 class scheme(models.Model):
     scheme_no=models.IntegerField(primary_key=True)
     theory_cr=models.IntegerField()
@@ -30,12 +32,15 @@ class scheme(models.Model):
     max_th=models.IntegerField()
     max_pr=models.IntegerField()
     max_mid=models.IntegerField()
+    min_th=models.IntegerField()
+    min_pr=models.IntegerField()
 
 
 
 
     def __str__(self):
         return str(self.theory_cr) + " + " + str(self.practical_cr) + " ( " + str(self.scheme_no) + " ) "
+
 
 
 
@@ -53,7 +58,13 @@ class subjects(models.Model):
 
 
     def __str__(self):
-        return str(self.sub_name) +" ( " + str(self.sub_no)+ " )"
+        return str(self.sub_name) +" ( " + str(self.sub_no)+ " )" +str(self.sub_dept_no)
+
+    class Meta:
+        constraints=[
+        models.UniqueConstraint(fields=['sub_no','sub_dept_no','sem'],name='unique_subject')
+        ]
+        # unique_together = (('sub_no', 'sub_dept_no','sem'),)
 
 
 
@@ -77,11 +88,14 @@ class marks(models.Model):
 class backlog(models.Model):
     back_enroll_no=models.ForeignKey(student,on_delete=models.CASCADE)
     back_sub_no=models.ForeignKey(subjects,on_delete=models.PROTECT)
+    status=models.TextField(max_length=30)
+
+    
 
 
 
     def __str__(self):
-        return str(self.back_enroll_no) +" ( " + str(self.back_sub_no)+ " )"
+        return str(self.back_enroll_no) +" ( " + str(self.back_sub_no)+ " ) " + str(self.status)
     class Meta:
         unique_together = (('back_enroll_no', 'back_sub_no'),)
 
