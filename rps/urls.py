@@ -28,4 +28,6 @@ urlpatterns = [
     path('sub_form',job.views.sub_form,name='sub_form'),
     path('marks_form',job.views.marks_form,name='marks_form'),
     path('result_form',job.views.result_form,name='result_form'),
+    path('no_marks',job.views.no_marks,name='no_marks'),
+    path('verify_enroll',job.views.verify_enroll,name='verify_enroll')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
