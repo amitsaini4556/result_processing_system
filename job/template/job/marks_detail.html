@@ -27,16 +27,31 @@ http://www.tooplate.com/view/2097-pop
     <div id="tm-wrap">
         <div class="tm-main-content">
             <div class="container tm-site-header-container">
+              {% if messages %}
+                <p class="messages">
+                    {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </p>
+            {% endif %}
 
                             <div class="details details--open" style="display: block;">
                               <div class="details__bg details__bg--down" style="transform: translateX(0px) translateY(0px) scaleX(1) scaleY(1); opacity: 1;">
                                 <button class="details__close" style="opacity: 1; transform: translateY(0%);"></i></button>
                                 <div class="details__description" style="opacity: 1; transform: translateY(0%);">
                                                                     <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
+
                                                                         <div class="row mb-3">
-                                                                            <div class="col-12">
+
+                                                                            <div class="col-11">
                                                                                 <h2 class="tm-page-title">Add Marks</h2>
+                                                                                </div>
+                                                                              
+                                                                                <div class="col-1">
+                                                                                  <a style="align:right;color:white;"class="fas fa-2x fa-times icon--cross tm-fa-close"  href="{% url 'home' %}"></a>
                                                                             </div>
+
+
                                                                         </div>
 
                                                                         <div class="row">
@@ -83,6 +98,8 @@ http://www.tooplate.com/view/2097-pop
 
                                                                                     <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
                                                                                 </form>
+
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
