@@ -9,7 +9,33 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-<style>.header img { float: left; width: 200px; height: 200px; background: #555; } .header h1 { position: relative; top: 18px; left: 10px; }</style>
+<style>.header img { float: left; width: 200px; height: 200px; background: #555; } .header h1 { position: relative; top: 18px; left: 10px; }
+table {
+  /* Location of the image */
+  background-image: url(static/img/Capture.PNG);
+
+
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center ;
+
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+
+  /* Background image is fixed in the viewport so that it doesn't move when
+     the content's height is greater than the image's height */
+
+
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: #464646;
+
+}
+
+</style>
   </head>
   <body class="container">
 <div class="header"><img style="margin: 2px 3px 5px 3px;" src="{% static "img/logo.jpg" %}" alt="MPUAT LOGO" width="176" height="176" />
@@ -18,7 +44,7 @@
   <h4 align="center" style="color:#c47a4e;"><b>STUDENT'S GRADE REPORT</b></h4><br>
 
 </div>
-  <h5 align="center">ENGINEERING AND TECHNOLOGY<br>BACHELOR OF TECHNOLOGY ( {{ dept_name }})</h5>
+  <h5 align="center">ENGINEERING AND TECHNOLOGY<br>BACHELOR OF TECHNOLOGY ( {{ dept_name }} )</h5>
 <br>
 <br>
 <br>
@@ -42,11 +68,12 @@
   </div>
 <br>
 <div class="table-responsive">
-<table width="2000" border="2px" style="border-color:#c47a4e;background:#fff9eb" align="center" class="table" #fff9eb>
+
+<table width="2500" border="2px" style="border-color:#c47a4e;" align="center" class="table" #fff9eb>
 <tbody>
 <tr style="border:2px solid #c47a4e;">
 <td style="border:2px solid #c47a4e;" colspan="2" rowspan="2" width="115">
-<p style="color:#aa5928;"><strong>Course No</strong></p>
+<p style="color:#aa5928;align:center"><strong>Course No</strong></p>
 
 
 </td>
@@ -124,7 +151,10 @@
 <p><strong>{{ zip.9 }}</strong></p>
 </td>
 </tr>
-  {% endfor %}
+
+{% endfor %}
+
+
 <tr>
 <td style="border-right:2px solid #c47a4e;" colspan="2" width="115">
 <p><strong>&nbsp;</strong></p>
@@ -217,7 +247,7 @@
 {% endfor %}
 <tr>
 <td style="border:2px solid #c47a4e;" colspan="3" width="469">
-<p style="color:#aa5928;"><strong>Total of all previous semester including backlog course(s) offered in current semester</strong></p>
+<p style="color:#aa5928;"><strong>Total of all previous semester excluding backlog course(s) offered in current semester</strong></p>
 </td>
 <td style="border:2px solid #c47a4e;" colspan="5" width="140">
 <p><strong>{{ previous_cr }}</strong></p>
@@ -247,13 +277,14 @@
 <td style="border:2px solid #c47a4e;" colspan="11" width="647">
 <p style="color:#aa5928;"><strong>Overall Grade Point Average(OGPA)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ ogpa }}</strong></p>&nbsp;
 </td>
-<td colspan="10" width="322">
+<td style="border:2px solid #c47a4e;" colspan="10" width="322">
 <p style="color:#aa5928;"><strong>Result : &nbsp;&nbsp;&nbsp; </strong></p>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
+
 <p style="color:#aa5928;">Th = Theory&nbsp;&nbsp;Pr = Practical&nbsp;&nbsp;&nbsp; MT=Mid Term&nbsp;&nbsp;&nbsp; F = Fail&nbsp;&nbsp;&nbsp; UM = Unfairmeans&nbsp;&nbsp;&nbsp; R=Repeat&nbsp;&nbsp;&nbsp; DE =Detained&nbsp;&nbsp;&nbsp; Ab=Absent&nbsp;&nbsp;&nbsp; * = Elective&nbsp;&nbsp;&nbsp; S= Satisfactory&nbsp;&nbsp;&nbsp; N=Non Credit</p>
   </body>
 </html>
