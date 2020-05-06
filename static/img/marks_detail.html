@@ -1,0 +1,170 @@
+<html lang="en" class="js"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Result Processing System</title>
+<!--
+Template 2097 Pop
+http://www.tooplate.com/view/2097-pop
+-->
+    <!-- load CSS -->
+    <link rel="stylesheet" href="/static/https%3A/fonts.googleapis.com/css%3Ffamily%3DOpen%2BSans%3A300">  <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">                                  <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="/static/fontawesome/css/fontawesome-all.min.css">                <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" type="text/css" href="/static/slick/slick.css">                       <!-- http://kenwheeler.github.io/slick/ -->
+    <link rel="stylesheet" type="text/css" href="/static/slick/slick-theme.css">
+    <link rel="stylesheet" href="/static/css/tooplate-style.css">
+                             <!-- Templatemo style -->
+
+    <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this in a modern browser such as latest version of Chrome or Microsoft Edge.");</script>
+    <style>
+
+    </style>
+</head>
+
+<body data-gr-c-s-loaded="true">
+    <div id="tm-bg"></div>
+    <div id="tm-wrap">
+        <div class="tm-main-content">
+            <div class="container tm-site-header-container">
+              {% if messages %}
+                <p class="messages">
+                    {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </p>
+            {% endif %}
+
+                            <div class="details details--open" style="display: block;">
+                              <div class="details__bg details__bg--down" style="transform: translateX(0px) translateY(0px) scaleX(1) scaleY(1); opacity: 1;">
+                                <button class="details__close" style="opacity: 1; transform: translateY(0%);"></i></button>
+                                <div class="details__description" style="opacity: 1; transform: translateY(0%);">
+                                                                    <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
+                                                                        <div class="row mb-3">
+                                                                            <div class="col-4">
+                                                                                <h2 class="tm-page-title">Add Marks</h2>
+                                                                            </div>
+                                                                            <div class="col-4">
+
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                  <h4 style="text-align:right;color:white;"><a href="{% url 'home' %}" ><b>X</b></a> </h4>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <form action="{% url 'marks_form' %}" method="post" class="contact-form">
+                                                                                  {% csrf_token %}
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                                          <input type="text" id="marks_enroll" name="marks_enroll_no" class="form-control" placeholder="Enrollment Number"  required hidden value="{{ enroll }}"/>
+                                                                                        </div>
+
+                                                                                      </div>
+
+                                                                                      <div class="row">
+                                                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6 ">
+                                                                                          <label for="subjects"><h5>Subject No ::</h5></label>
+                                                                                          <select id="subjects" name="marks_sub_no">
+                                                                                            {% for sub in subject.all %}
+                                                                                            <option value="{{ sub.sub_no }}" >{{ sub.sub_name }}</option>
+                                                                                            {% endfor %}
+
+                                                                                          </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                                          <input type="text" id="contact_name" name="th" class="form-control" placeholder="Theory"  required/>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                      <div class="row">
+                                                                                          <div class="form-group col-md-6 col-lg-6 col-xl-6">
+
+                                                                                            <input type="text"  id="contact_name" name="pr" class="form-control" placeholder="Practical"  required/>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                                              <input type="text"  id="contact_name" name="mid" class="form-control" placeholder="Mid Term"  required/>
+                                                                                            </div>
+                                                                                          </div>
+
+
+
+                                                                                    <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                                                </form>
+                                                                            <h6 style="text-align:center"><a href="{% url 'home' %}" >CLICK HERE if you want to go on home paage</a> </h6>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                              </div>
+                              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <p class="small tm-copyright-text">Rsult Processing System © <span class="tm-current-year">2020</span> Project Prtner : Amit Saini | Hema Bhagnani | Muskan Paliwal</p>
+            </footer>
+        </div> <!-- .tm-main-content -->
+
+    </div>
+    <!-- load JS -->
+    <script src="/static/js/jquery-3.2.1.slim.min.js"></script>         <!-- https://jquery.com/ -->
+    <script src="/static/slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+    <script src="/static/js/anime.min.js"></script>                     <!-- http://animejs.com/ -->
+    <script src="/static/js/main.js"></script>
+
+    <script>
+
+        function setupFooter() {
+            var pageHeight = $('.tm-site-header-container').height() + $('footer').height() + 100;
+
+            var main = $('.tm-main-content');
+
+            if($(window).height() < pageHeight) {
+                main.addClass('tm-footer-relative');
+            }
+            else {
+                main.removeClass('tm-footer-relative');
+            }
+        }
+
+        /* DOM is ready
+        ------------------------------------------------*/
+        $(function(){
+
+            setupFooter();
+
+            $(window).resize(function(){
+                setupFooter();
+            });
+
+            $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
+        });
+//
+//
+    </script>
+
+
+
+</body></html>
