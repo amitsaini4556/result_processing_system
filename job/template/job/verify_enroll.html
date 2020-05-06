@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Result Processing System</title>
+<!--
+Template 2097 Pop
+http://www.tooplate.com/view/2097-pop
+-->
+    <!-- load CSS -->
+    <link rel="stylesheet" href="{% static "https://fonts.googleapis.com/css?family=Open+Sans:300" %}">  <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">                                  <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="{% static "fontawesome/css/fontawesome-all.min.css" %}">                <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" type="text/css" href="{% static "slick/slick.css" %}">                       <!-- http://kenwheeler.github.io/slick/ -->
+    <link rel="stylesheet" type="text/css" href="{% static "slick/slick-theme.css" %}">
+    <link rel="stylesheet" href="{% static "css/tooplate-style.css" %}">
+                             <!-- Templatemo style -->
+
+    <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this in a modern browser such as latest version of Chrome or Microsoft Edge.");</script>
+    <style>
+    #tm-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url( '/static/img/bg.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1;
+        transition: all 0.3s ease;
+        max-width: 100%;
+
+    }
+
+    #tm-bg:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height:100%;
+        max-width: 100%;
+
+    }
+    </style>
+</head>
+
+<body >
+
+    <div id="tm-bg"></div>
+    <div id="tm-wrap">
+        <div class="tm-main-content">
+            <div class="container tm-site-header-container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-md-col-xl-6 mb-md-0 mb-sm-4 mb-4 tm-site-header-col">
+                        <div class="tm-site-header">
+                            <h1 class="mb-4" ><b>Result Processing System</b></h1>
+                          <!-- <br><p style="color:red">{{ error_message }}</p> -->
+                          {% if messages %}
+                          <ul class="messages">
+                              {% for message in messages %}
+                              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                              {% endfor %}
+                          </ul>
+                          {% endif %}
+                            <img src="{% static "img/underline.png" %}" class="img-fluid mb-4">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="content">
+                            <div class="grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="grid__item">
+                                    <div class="product">
+                                        <div class="tm-nav-link">
+                                            <i class="fas fa-calculator fa-3x tm-nav-icon"></i>
+                                            <span class="tm-nav-text"><i class="fa fa-plus-square" aria-hidden="true"></i> Marks</span>
+                                            <div class="product__bg"></div>
+                                        </div>
+                                        <div class="product__description">
+                                            <div class="pt-sm-4 pb-sm-4 pl-sm-5 pr-sm-5 pt-2 pb-2 pl-3 pr-3">
+                                                <div class="row mb-3">
+                                                    <div class="col-12">
+                                                        <h2 class="tm-page-title">Verify Enroll No.</h2>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <form action="{% url 'verify_enroll' %}" method="post" class="contact-form">
+                                                          {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
+                                                                  <input type="text" id="marks_enroll" name="marks_enroll_no" class="form-control" placeholder="Enrollment Number"  required filter(this.id,'subjects')/>
+                                                                </div>
+                                                              </div>
+
+
+                                                            <button type="submit" class="btn btn-primary tm-btn-submit">Save</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <footer>
+                <p class="small tm-copyright-text">Rsult Processing System &copy; <span class="tm-current-year">2020</span> Project Prtner : Amit Saini | Hema Bhagnani | Muskan Paliwal</p>
+            </footer>
+
+    <!-- load JS -->
+    <script src="{% static "js/jquery-3.2.1.slim.min.js" %}"></script>         <!-- https://jquery.com/ -->
+    <script src="{% static "slick/slick.min.js" %}"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+    <script src="{% static "js/anime.min.js" %}"></script>                     <!-- http://animejs.com/ -->
+    <script src="{% static "js/main.js" %}"></script>
+
+    <script>
+
+        function setupFooter() {
+            var pageHeight = $('.tm-site-header-container').height() + $('footer').height() + 100;
+
+            var main = $('.tm-main-content');
+
+            if($(window).height() < pageHeight) {
+                main.addClass('tm-footer-relative');
+            }
+            else {
+                main.removeClass('tm-footer-relative');
+            }
+        }
+
+        /* DOM is ready
+        ------------------------------------------------*/
+        $(function(){
+
+            setupFooter();
+
+            $(window).resize(function(){
+                setupFooter();
+            });
+
+            $('.tm-current-year').text(new Date().getFullYear());  // Update year in copyright
+        });
+//
+// {% if error_message %}
+//         alert( '{{ error_message }} ');
+// {% endif %}
+    </script>
+
+</body>
+</html>

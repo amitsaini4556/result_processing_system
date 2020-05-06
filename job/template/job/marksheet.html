@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" id="content">
+  <head>
+    <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+
+<style>.header img { float: left; width: 200px; height: 200px; background: #555; } .header h1 { position: relative; top: 18px; left: 10px; }
+table {
+  /* Location of the image */
+  background-image: url(static/img/Capture.PNG);
+
+
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center ;
+
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+
+  /* Background image is fixed in the viewport so that it doesn't move when
+     the content's height is greater than the image's height */
+
+
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: #464646;
+
+}
+
+</style>
+  </head>
+
+      <body  class="container">
+    <div class="header"><img style="margin: 2px 3px 5px 3px;" src="{% static "img/logo.jpg" %}" alt="MPUAT LOGO" width="176" height="176" />
+      <img style="float:right;margin: 2px 3px 5px 3px;background:none" src="{% static "img/engineer.png" %}" alt="student photo" width="176" height="176"  />
+    <h3 align="center" style="color:#c47a4e;"><b>MAHARANA PRATAP UNIVERSITY OF AGRICULTURE AND TECHNOLOGY UDAIPUR</b></h3>
+
+      <h4 align="center" style="color:#c47a4e;"><b>STUDENT'S GRADE REPORT</b></h4><br>
+
+    </div>
+      <h5 align="center">ENGINEERING AND TECHNOLOGY<br>BACHELOR OF TECHNOLOGY ( {{ dept_name }} )</h5>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+       <div class="col-sm-6 col-md-6 col-lg-6" style="color:#c47a4e;">
+         <b>Name</b>      :<span style="color:black;">{{stu_fname }} {{ stu_lname }}</span>
+       </div>
+       <div class="col-sm-6 col-md-6 col-lg-6" style="color:#c47a4e;">
+         <b>Enrollment No.</b> :<span style="color:black;">{{ stu_enroll }}</span>
+       </div>
+     </div>
+     <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6" style="color:#c47a4e;">
+          <b>Class</b>      :<span style="color:black;">{{ year }} year</span>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6" style="color:#c47a4e;">
+          <b>Semester</b> :<span style="color:black;"> {{ semaster }}</span>
+        </div>
+      </div>
+    <br>
+    <div class="table-responsive">
+
+    <table width="2500" border="2px" style="border-color:#c47a4e;" align="center" class="table" #fff9eb>
+    <tbody>
+    <tr style="border:2px solid #c47a4e;">
+    <td style="border:2px solid #c47a4e;" colspan="2" rowspan="2" width="115">
+    <p style="color:#aa5928;align:center"><strong>Course No</strong></p>
+
+
+    </td>
+
+
+    <td style="border:2px solid #c47a4e;" colspan="3" rowspan="2" width="361">
+    <p style="color:#aa5928;"><strong>Title Of Course</strong></p>
+
+
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="4" width="144">
+    <p style="color:#aa5928;"><strong>Credit/Hours</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="8" width="190">
+    <p style="color:#aa5928;"><strong>Marks Obtained</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" rowspan="2" width="77">
+    <p style="color:#aa5928;"><strong>Grade Point</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="3" rowspan="2" width="82">
+    <p style="color:#aa5928;"><strong>Credit Point</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="66">
+    <p style="color:#aa5928;"><strong>Th</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="78">
+    <p style="color:#aa5928;"><strong>Pr</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="55">
+    <p style="color:#aa5928;"><strong>Th</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="60">
+    <p style="color:#aa5928;"><strong>Pr</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="75">
+    <p style="color:#aa5928;"><strong><b>MT</b></strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;"  width="75">
+    <p style="color:#aa5928;"><strong><b>Total</b></strong></p>
+    </td>
+    </tr>
+    {% for zip in zip_list %}
+    <tr >
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="115">
+      <p><strong>{{ zip.0 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="361">
+      <p><strong>{{ zip.1 }}</strong></p>
+
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="66">
+    <p><strong>{{ zip.2 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="78">
+    <p><strong>{{ zip.3 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="55">
+    <p><strong>{{ zip.4 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="60">
+    <p><strong>{{ zip.5 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="75">
+    <p><strong>{{ zip.6 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="75">
+    <p><strong>{{ zip.7 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="77">
+    <p><strong>{{ zip.8 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="82">
+    <p><strong>{{ zip.9 }}</strong></p>
+    </td>
+    </tr>
+
+    {% endfor %}
+
+
+    <tr>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="115">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="361">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="66">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="78">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="55">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="60">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="75">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="75">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="77">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="82">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="5" width="476">
+    <p style="color:#aa5928;"><strong>Total</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="4" width="144">
+    <p><strong>{{ sum_cr_current }}</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="10" width="267">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="3" width="82">
+    <p><strong>{{ sum_points_current }}</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="21" width="969">
+    <p style="color:#aa5928;"><strong>Grade Point Average for the semester(SGPA)&nbsp;&nbsp;{{ sgpa }}</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="21" width="969">
+    <p style="color:#aa5928;"><strong>BACKLOG COURSE(S) OF LOWER CLASSES</strong></p>
+    </td>
+    </tr>
+    {% for back_zip in back_zip_list %}
+    <tr>
+    <td style="border-right:2px solid #c47a4e;" width="112" colspan="2">
+    <p><strong>{{ back_zip.0 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="361">
+    <p><strong>{{ back_zip.1 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="66">
+    <p><strong>{{ back_zip.2 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="83">
+    <p><strong>{{ back_zip.3 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="2" width="61">
+    <p><strong>{{ back_zip.4 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" width="50">
+    <p><strong>{{ back_zip.5 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="84">
+    <p><strong>{{ back_zip.6 }}</strong></p>
+    </td>
+    <td style="border-right:2px solid #c47a4e;" colspan="3" width="76">
+    <p><strong>{{ back_zip.7 }}</strong></p>
+    </td>
+
+    <td style="border-right:2px solid #c47a4e;"  width="77">
+    <p><strong>{{ back_zip.8 }}</strong></p>
+    <td style="border-right:2px solid #c47a4e;" width="77">
+    <p><strong>{{ back_zip.9 }}</strong></p>
+    </td>
+    </tr>
+    {% endfor %}
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="3" width="469">
+    <p style="color:#aa5928;"><strong>Total of all previous semester excluding backlog course(s) offered in current semester</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="5" width="140">
+    <p><strong>{{ previous_cr }}</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="11" width="279">
+    <p><strong>&nbsp; </strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="81">
+    <p><strong>{{ previous_points }}</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="3" width="469">
+    <p style="color:#aa5928;"><strong>Total of all semester including current one(regular and backlog courses)</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="5" width="140">
+    <p><strong>{{ crs }}</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="11" width="279">
+    <p><strong>&nbsp;</strong></p>
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="2" width="81">
+    <p><strong>{{ grades }}</strong></p>
+    </td>
+    </tr>
+    <tr>
+    <td style="border:2px solid #c47a4e;" colspan="11" width="647">
+    <p style="color:#aa5928;"><strong>Overall Grade Point Average(OGPA)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ ogpa }}</strong></p>&nbsp;
+    </td>
+    <td style="border:2px solid #c47a4e;" colspan="10" width="322">
+    <p style="color:#aa5928;"><strong>Result : &nbsp;&nbsp;&nbsp; </strong></p>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p style="color:#aa5928;">Th = Theory&nbsp;&nbsp;Pr = Practical&nbsp;&nbsp;&nbsp; MT=Mid Term&nbsp;&nbsp;&nbsp; F = Fail&nbsp;&nbsp;&nbsp; UM = Unfairmeans&nbsp;&nbsp;&nbsp; R=Repeat&nbsp;&nbsp;&nbsp; DE =Detained&nbsp;&nbsp;&nbsp; Ab=Absent&nbsp;&nbsp;&nbsp; * = Elective&nbsp;&nbsp;&nbsp; S= Satisfactory&nbsp;&nbsp;&nbsp; N=Non Credit</p>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<script>
+const html = document.querySelector("#element").innerHTML;
+
+const pdf = new jsPDF('p', 'en', 'letter');
+const handlers = {audio: () => false};
+const config = {top: 80, bottom: 60, left: 40, width: 522};
+
+pdf.fromHTML(
+    html,
+    config.left,
+    config.top,
+    {config.width, handlers},
+    (dispose) => pdf.save('example.pdf'),
+    config
+);
+</script>
+
+
+  </body>
+</html>
