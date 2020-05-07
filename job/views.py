@@ -516,6 +516,11 @@ def marks_form(request):
 def result_form(request):
     if request.method=='POST':
         if student.objects.filter(enroll_no=request.POST['result_enroll']).exists():
+                stud2d=student.objects.get(enroll_no=request.POST['result_enroll'])
+                if str(stud2d.d2d)=='Yes' and (str(request.POST['Sem'])=='1' or str(request.POST['Sem'])=='2'):
+                    messages.error(request,'Deploma Student')
+                    return redirect(home,error_message="Deploma Student")
+
                 if result.objects.filter(result_enroll_no=request.POST['result_enroll']).exists():
                     result_obj=result.objects.get(result_enroll_no=request.POST['result_enroll'])
                     if request.POST['Sem']=='1':
@@ -726,6 +731,10 @@ def result_form(request):
                 student_roll=str(request.POST['result_enroll'])
                 student_start_four=int(student_roll[0:4])
                 roll_no=student.objects.get(enroll_no=student_roll)
+                if str(roll_no.d2d)=='Yes':
+                        student_start_four=int(student_start_four)-1
+                else:
+                        student_start_four=int(student_start_four)
                 sub_list=subjects.objects.filter(sem=request.POST['Sem']).filter(sub_dept_no=roll_no.student_dept_no)
                 sub_last_four_list=[]
                 for sub in sub_list:
@@ -739,6 +748,7 @@ def result_form(request):
                     if (student_start_four-list)<=min and (student_start_four-list)>=0:
                         min=student_start_four-list
                         scheme_year=list
+
                 str_scheme_year=str(scheme_year)
                 print(scheme_year)
                 stu_dept_no_1=student.objects.get(enroll_no=request.POST['result_enroll'])
@@ -896,7 +906,7 @@ def result_form(request):
 
                     return render(request,'job/marksheet.html',context)
                 except:
-                    messages.error(request,'result dont exist')
+                    messages.error(request,'Result Does Not Exist!!')
                     return redirect(home,error_message="Student Does Not Exist!!")
 
         else:
@@ -1042,9 +1052,18 @@ def back_result(enroll=''):
         sem_id=7
     elif result_obj.sem8==0:
         sem_id=8
-    for i in range(1,sem_id,1):
+
+    id=0
+    if str(student_obj.d2d)=='Yes':
+        id=3
+    else:
+        id=1
+    for i in range(id,sem_id,1):
+        print(i)
         subject_obj=subjects.objects.filter(sub_dept_no=student_obj.student_dept_no).filter(sem=i).order_by('sub_no')
+        print(subject_obj)
         marks_obj=marks.objects.filter(marks_sub_no__in=subject_obj).filter(marks_enroll_no=enroll)
+        print(marks_obj)
         results=0.0
         crs=0
         for mark in marks_obj:
