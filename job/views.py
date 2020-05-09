@@ -4,9 +4,10 @@ from .models import *
 from django.contrib import messages
 
 
-# Create your views here.
+# Home page.
 def home(request,error_message=''):
-    #used to make dynamic options in forms
+    
+ #used to make dynamic options in forms
     dept_no_list = department.objects.all()
     scheme_no_list=scheme.objects.all()
     sub_no_list=subjects.objects.all().order_by('sub_no')
@@ -27,13 +28,16 @@ def home(request,error_message=''):
 
 
 
-
+#to add a new department
 def dept_form(request):
     if request.method=='POST':
+        
+        #if department to be added is already present
         if department.objects.filter(dept_no=request.POST['dept_no']).exists():
-            #messages.add_message(request, messages.INFO, '')
             messages.error(request, 'Department Already Exist!!')
             return redirect(home,error_message="Department Already Exist!!")
+        
+        #department does not exist then add it
         Department=department()
         Department.dept_name=request.POST['dept_name']
         Department.dept_no=request.POST['dept_no']
@@ -48,20 +52,27 @@ def dept_form(request):
 
 
 
-
+#to add a new student
 def student_form(request):
     if request.method=='POST':
+        
+    #if student to be added already exists
         if student.objects.filter(enroll_no=request.POST['enroll_no']).exists():
             messages.error(request,'Student Already Exist!!')
             return redirect(home,error_message="Student Already Exist!!")
-
+        
+    #if student does not present in database the add it
         Student=student()
         Student.fname=request.POST['fname']
         Student.lname=request.POST['lname']
         Student.enroll_no=request.POST['enroll_no']
         student_dept_no=request.POST['student_dept_no']
+        
+       #check for foreign key constraint of department number
         Student.student_dept_no=department.objects.get(dept_no=student_dept_no)
         Student.save()
+        
+        #if the student is D2D
         if 'stu_dtod' in request.POST:
             result_obj=result()
             result_obj.result_enroll_no=student.objects.get(enroll_no=request.POST['enroll_no'])
@@ -80,18 +91,22 @@ def student_form(request):
 
 
 
-
+#to add a new scheme
 def scheme_form(request):
 
         if request.method=='POST':
+            
+         #if shcheme alresdy exists then show errror
             if  scheme.objects.filter(scheme_no=request.POST['scheme_no']).exists():
                 messages.error(request,'Scheme Already Exixt!!')
                 return redirect(home,error_message="Scheme Already Exist!!")
-
+            
+            #if not then added
             sc_no=int(request.POST['scheme_no'])
             th_cr=int(request.POST['theory_cr'])
             pr_cr=int(request.POST['practical_cr'])
-
+            
+            #maximum and minimum marks added according to the credits got from the form
             if th_cr==1 and pr_cr==1 or th_cr==2 and pr_cr==1 or th_cr==2 and pr_cr==2 or th_cr==3 and pr_cr==1 or th_cr==3 and pr_cr==2:
                 Scheme= scheme.objects.create(scheme_no=sc_no, theory_cr=th_cr,practical_cr=pr_cr,max_th='50',max_mid='20',max_pr='30',min_th='28',min_pr='12')
 
@@ -105,7 +120,7 @@ def scheme_form(request):
             elif th_cr==1 and pr_cr==2 or th_cr==1 and pr_cr==3 or th_cr==1 and pr_cr==4:
                 Scheme= scheme.objects.create(scheme_no=sc_no, theory_cr=th_cr,practical_cr=pr_cr,max_th='30',max_mid='20',max_pr='50',min_th='12',min_pr='28')
 
-
+            #if the passed scheme is not a recognized valid scheme
             else:
                 messages.error(request,'Enter a Valid Scheme')
                 return redirect(home,error_message="Enter a Valid Scheme!!")
@@ -119,21 +134,26 @@ def scheme_form(request):
 
 
 
-
+#to add a new subject
 def sub_form(request):
     if request.method=='POST':
+        
+        #generate a unique subject code:code/scheme_year/dept_no
         string=''
         dept_no_obj=department.objects.get(dept_no=request.POST['sub_dept_no'])
         field_name_dept='dept_no'
         field_object_dept=department._meta.get_field(field_name_dept)
         dept_no=field_object_dept.value_from_object(dept_no_obj)
         string=str(request.POST['sub_no']) +str('') + str('/') + str(request.POST['student_scheme']) + str('/') + str(dept_no)
-
+        
+        #if generated subject code already exist
         if subjects.objects.filter(sub_no=string).filter(sub_dept_no=request.POST['sub_dept_no']).exists():
             messages.error(request,'Subject Already Exixt!!')
             return redirect(home,error_message="Subject Already Exist!!")
 
         else:
+            
+        #add the new subject
             Subject=subjects()
 
             Subject.sub_no=string
@@ -160,29 +180,30 @@ def sub_form(request):
 
 def marks_form(request):
         if request.method=='POST':
+            
+#Check for the student whoese marks need to be eneterd
             if student.objects.filter(enroll_no=request.POST['marks_enroll_no']).exists():
 
 
-
-                        if backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).filter(back_sub_no=request.POST['marks_sub_no']).filter(status__contains='Back').exists() :
-
+#if the student has backlog in the entered subject then update the marks of the student
+                        if backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).filter(back_sub_no=request.POST['marks_sub_no']).filter(status__contains='Back').exists() 
+    
+                                #get the student entry from the backlog table
                                 back_obj_enroll=backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no'])
                                 back_obj=back_obj_enroll.get(back_sub_no__exact=request.POST['marks_sub_no'])
                                 field_name_back_sub='back_sub_no'
                                 back_log_object=backlog._meta.get_field(field_name_back_sub)
                                 back_log_sub_code=back_log_object.value_from_object(back_obj)
-
-
-
                                 marks_sub_no=request.POST['marks_sub_no']
                                 sub_scheme_obj=subjects.objects.get(sub_no=marks_sub_no)
-
+                                
+                                #get the scheme number of the subject
                                 field_name='sub_scheme_no'
                                 field_object=subjects._meta.get_field(field_name)
                                 scheme_id=field_object.value_from_object(sub_scheme_obj)
-
                                 scheme_obj=scheme.objects.get(scheme_no=scheme_id)
-
+                                
+                                #get the theory and practical credits of the subject using the scheme number
                                 field_name_th='theory_cr'
                                 field_object_th=scheme._meta.get_field(field_name_th)
                                 th_cr=field_object_th.value_from_object(scheme_obj)
@@ -190,15 +211,18 @@ def marks_form(request):
                                 field_name_pr='practical_cr'
                                 field_object_pr=scheme._meta.get_field(field_name_pr)
                                 pr_cr=field_object_pr.value_from_object(scheme_obj)
-
+                                
+                                #Update the marks in marks table
                                 mark_back_obj=marks.objects.filter(marks_enroll_no=request.POST['marks_enroll_no']).filter(marks_sub_no=back_log_sub_code)
                                 mark_back_obj.update(th=request.POST['th'])
                                 mark_back_obj.update(pr=request.POST['pr'])
                                 mark_back_obj.update(mid=request.POST['mid'])
-
+                                
+                                #Calculate the new grade point point 
                                 result1=(th_cr + pr_cr) * (int(request.POST['th']) + int(request.POST['pr']) + int(request.POST['mid']))/10
                                 mark_back_obj.update(current_result=result1)
-
+                                
+                                #check for further backlog
                                 if th_cr==1 and pr_cr==1 or th_cr==2 and pr_cr==1 or th_cr==2 and pr_cr==2 or th_cr==3 and pr_cr==1 or th_cr==3 and pr_cr==2:
                                     if (int(request.POST['th']) + int(request.POST['mid']))>=28 and int(request.POST['pr'])>=12:
 
@@ -242,11 +266,14 @@ def marks_form(request):
                                     if (int(request.POST['th']))<12 or int(request.POST['pr'])>=28:
 
                                         backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).filter(back_sub_no=request.POST['marks_sub_no']).update(status='Back in Theory')
-
+                                        
+                                #update the sgpa and ogpa after enering the backlog marks
                                 back_result(request.POST['marks_enroll_no'])
                                 sub_sem=subjects.objects.get(sub_no=request.POST['marks_sub_no'])
                                 from .models import result
                                 result_check=result.objects.get(result_enroll_no=request.POST['marks_enroll_no'])
+                                
+                                #handle Year backlog case
                                 if str(result_check.result_status)=='Year Back':
                                     count=0
                                     count=int(request.POST['count'])+1
@@ -259,7 +286,7 @@ def marks_form(request):
                                         return redirect('home')
                                     enroll=request.POST['marks_enroll_no']
                                     return render(request,'job/marks_detail.html',{'subject':subject,'enroll':enroll,'count':count})
-
+            
                                 if int(sub_sem.sem)%2==0:
                                     count=0
                                     count=int(request.POST['count'])+1
@@ -293,24 +320,28 @@ def marks_form(request):
                                 messages.error(request,'BackLog subject updated for current student')
 
 
-
+                        #marks already exists
                         else:
                                 if marks.objects.filter(marks_sub_no=request.POST['marks_sub_no']).filter(marks_enroll_no=request.POST['marks_enroll_no']).exists():
                                     messages.error(request,'Marks Already Uploaded!!')
                                     return redirect(home,error_message="Marks Already Uploaded!!")
-
+                                
+                                #if marks are enetred for the first time
                                 Marks=marks()
-
+                                
+                                #get the subject code from database
                                 sub_obj=subjects.objects.get(sub_no=request.POST['marks_sub_no'])
                                 field_name_subject='sub_no'
                                 field_object_sub=subjects._meta.get_field(field_name_subject)
                                 subject_no=str(field_object_sub.value_from_object(sub_obj))
-
+                                
+                                #get the subjects of all scheme years
                                 sub_last_ele=(subject_no[0:7])
                                 print(sub_last_ele)
                                 student_obj=student.objects.get(enroll_no=request.POST['marks_enroll_no'])
                                 sub_sare_list=subjects.objects.all().filter(sub_no__contains=sub_last_ele).filter(sub_dept_no=student_obj.student_dept_no)
-
+                                
+                                #get scheme year for D2D students
                                 student_roll=request.POST['marks_enroll_no']
                                 print(str(student_obj.d2d))
                                 if str(student_obj.d2d)=='Yes':
@@ -321,7 +352,7 @@ def marks_form(request):
                                     print(student_start_four)
                                     print('else')
 
-
+                                # get the subject scheme year i.e 2017-18 or 2018-19.......etc   according to the enrollment number
                                 min=5
                                 subject_loop_obj=subjects()
 
@@ -340,16 +371,16 @@ def marks_form(request):
                                 field_object_sub_no=subjects._meta.get_field(field_name_sub_no)
                                 sub_id=field_object_sub_no.value_from_object(subject_loop_obj)
 
-
+                                #select the subject code according to scheme year
                                 Marks.marks_sub_no=subjects.objects.get(sub_no=sub_id)
                                 sub_scheme_obj=subjects.objects.get(sub_no=sub_id)
 
                                 field_name='sub_scheme_no'
                                 field_object=subjects._meta.get_field(field_name)
                                 scheme_id=field_object.value_from_object(sub_scheme_obj)
-
                                 scheme_obj=scheme.objects.get(scheme_no=scheme_id)
-
+                                
+                                #get the theory and practical credits
                                 field_name_th='theory_cr'
                                 field_object_th=scheme._meta.get_field(field_name_th)
                                 th_cr=field_object_th.value_from_object(scheme_obj)
@@ -357,13 +388,15 @@ def marks_form(request):
                                 field_name_pr='practical_cr'
                                 field_object_pr=scheme._meta.get_field(field_name_pr)
                                 pr_cr=field_object_pr.value_from_object(scheme_obj)
-
+                                
+                                #calculate total credits
                                 total_cr=th_cr + pr_cr
                                 Marks.current_cr=total_cr
 
                                 marks_enroll_no=request.POST['marks_enroll_no']
                                 Marks.marks_enroll_no=student.objects.get(enroll_no=marks_enroll_no)
-
+                                
+                                #check for valid marks according to the credits
                                 if int(scheme_obj.max_th)>=int(request.POST['th']):
                                     Marks.th=request.POST['th']
                                 else:
@@ -380,10 +413,11 @@ def marks_form(request):
                                     messages.error(request,"Insert Mid-Term marks according to Used Scheme!!")
                                     return redirect(home,error_message="Insert Mid-Term marks according to Used Scheme!!")
 
-
+                                #calculating credit points
                                 result=(th_cr + pr_cr) * (int(request.POST['th']) + int(request.POST['pr']) + int(request.POST['mid']))/10
                                 Marks.current_result=result
-
+                                
+                                #check if there is a baclog or not and set the status 
                                 if th_cr==1 and pr_cr==1 or th_cr==2 and pr_cr==1 or th_cr==2 and pr_cr==2 or th_cr==3 and pr_cr==1 or th_cr==3 and pr_cr==2:
                                     if (int(request.POST['th']) + int(request.POST['mid']))<28 and int(request.POST['pr'])<12:
                                         back=backlog()
@@ -449,12 +483,15 @@ def marks_form(request):
                                         back.save()
 
                                 Marks.save()
-
+                                
+                        #after saving the marks for a subject update the list of subjects in which marks are to be entered and pass the list to home page
                         subject1,sem_id=no_marks(request.POST['marks_enroll_no'])
                         mark_subject=marks.objects.filter(marks_enroll_no=request.POST['marks_enroll_no']).order_by('marks_sub_no')
                         mark_update_list=[]
                         count1=0
                         count2=0
+                        
+                        #subject list update in case of electives
                         for mark in mark_subject:
                             field_name='marks_sub_no'
                             field_object=marks._meta.get_field(field_name)
@@ -477,6 +514,8 @@ def marks_form(request):
                         student_dept=student.objects.get(enroll_no=enroll)
                         subject=subjects.objects.filter(sub_no__in=subject2)
                         final_query=subject
+                        
+                        #add backlog subjects in the subject list according to past odd even semester
                         if backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).exists():
                             if sem_id>=3:
                                 for i in range(sem_id,1,-2):
@@ -499,9 +538,10 @@ def marks_form(request):
 
 
             else:
-                    # return redirect(home,error_message="Student Does Not Exist!!")
+                   
                     messages.error(request,'Student Does Not Exist!!')
-                    messages.error(request,'Student Does Not Exist!!')
+                    return redirect(home,error_message="Student Does Not Exist!!")
+                    
 
         else:
                 return render(request,'job/home.html',context)
@@ -512,17 +552,25 @@ def marks_form(request):
 
 
 
-
+#compute the result and get the marksheet of the student
 def result_form(request):
     if request.method=='POST':
+        
+        #check for valid enrollment number
         if student.objects.filter(enroll_no=request.POST['result_enroll']).exists():
                 stud2d=student.objects.get(enroll_no=request.POST['result_enroll'])
+            
+                #if student is of D2D and semester enterred if 1 or 2 the show error
                 if str(stud2d.d2d)=='Yes' and (str(request.POST['Sem'])=='1' or str(request.POST['Sem'])=='2'):
                     messages.error(request,'Deploma Student')
                     return redirect(home,error_message="Deploma Student")
-
+            
+                 #if the student is not D2D or is D2D with sem greater than 2
+                #if the result is alredy computed and stored int the table then
                 if result.objects.filter(result_enroll_no=request.POST['result_enroll']).exists():
                     result_obj=result.objects.get(result_enroll_no=request.POST['result_enroll'])
+            
+                    #get the details such as student name,enrollment number ,list of subject,marks,credits ,grade point etc for the marksheet according to the semester enterred
                     if request.POST['Sem']=='1':
                         if result_obj.sem1!=0:
                             mark_list,th_mark,pr_mark,mid_mark,th_cr,pr_cr,sgpa,ogpa,year,semaster,stu_enroll,stu_fname,stu_lname,grades,crs,previous_points,previous_cr,total_mark,sub_name,current_res,sum_cr_current,sum_points_current,dept_name,back_zip_list,total=marksheet(request.POST['result_enroll'],request.POST['Sem'])
@@ -727,10 +775,12 @@ def result_form(request):
 
 
 
-
+                #if the reult is not already computed then first compute it
                 student_roll=str(request.POST['result_enroll'])
                 student_start_four=int(student_roll[0:4])
                 roll_no=student.objects.get(enroll_no=student_roll)
+                
+                #scheme year for d2d to search for the subjects
                 if str(roll_no.d2d)=='Yes':
                         student_start_four=int(student_start_four)-1
                 else:
@@ -743,6 +793,8 @@ def result_form(request):
                     if sub_last_four_int not in sub_last_four_list:
                         sub_last_four_list.append(sub_last_four_int)
                 min=5
+                
+                #check for scheme to be applied ie 2017-2018 or 2018-2019 ......according to the enrollment number
                 scheme_year=0
                 for list in sub_last_four_list:
                     if (student_start_four-list)<=min and (student_start_four-list)>=0:
@@ -784,10 +836,13 @@ def result_form(request):
                 field_name_roll='enroll_no'
                 field_object_result=student._meta.get_field(field_name_roll)
                 roll_no=field_object_result.value_from_object(student_object)
-
+                
+                #get the subjects to caculate the result
                 sub_no_obj=subjects.objects.all().filter(sub_no__contains=scheme_year).filter(sem=request.POST['Sem']).filter(sub_dept_no=(stu_dept_no_1.student_dept_no))
                 print('subjects')
                 print(sub_no_obj)
+            
+                #if student doestn't appeared for the semester exams and is asking for the reslut
                 try:
                     Marks=marks.objects.all().filter(marks_enroll_no=roll_no).filter(marks_sub_no__in=sub_no_obj)
                     print('marks subjects')
@@ -796,8 +851,12 @@ def result_form(request):
                     result_cr=0
                     result_t=0
                     crs=0
+                    
+                    #adding all the credits and all credits point
                     for mark in Marks:
                         string=str(mark.marks_sub_no)
+                        
+                        #handling the case  of NSS/NCC/NSO
                         if string[0:11] in ['NSS/NCC/NSO']:
                                 continue
                         field_name_current_result='current_result'
@@ -811,9 +870,11 @@ def result_form(request):
                         crs=field_object_current_cr.value_from_object(mark)
 
                         result_cr+=crs
-
+                        
+                    #rounding off the spga upto 2 places
                     fnl_result=round(float(result_sum/(result_cr)),2)
-
+                    
+                    #add the current sum of credits and sum of grade point to the privious grade point and credits 
                     if result.objects.filter(result_enroll_no=request.POST['result_enroll']).exists():
 
                         res_obj_res=result.objects.get(result_enroll_no=request.POST['result_enroll'])
@@ -824,8 +885,7 @@ def result_form(request):
                         current_cr_for=previous_cr + result_cr
                         result.objects.filter(result_enroll_no=request.POST['result_enroll']).update(total_credits_hour=current_cr_for)
 
-
-
+                    #compute the ogpa
                     if result.objects.filter(result_enroll_no=roll_no).exists():
                         res_obj=result.objects.get(result_enroll_no=request.POST['result_enroll'])
 
@@ -921,7 +981,7 @@ def result_form(request):
 
 
 
-
+#helper funtion that is used to pass the list of subjects in which marks hast to be entered for the next semester
 def verify_enroll(request):
     if request.method=='POST':
         if student.objects.filter(enroll_no=request.POST['marks_enroll_no']).exists():
@@ -937,7 +997,7 @@ def verify_enroll(request):
 
 
 
-
+#helper function for verify_enroll
 def no_marks(enroll=''):
         student_dept=student.objects.get(enroll_no=enroll)
         if result.objects.filter(result_enroll_no=str(enroll)).exists():
@@ -965,6 +1025,8 @@ def no_marks(enroll=''):
             stu_four=int(enroll[0:4])-1
         else:
             stu_four=int(enroll[0:4])
+            
+        #selecting the subjects
         if result.objects.filter(result_enroll_no=str(enroll)).exists():
                 if str(results.result_status)=='Year Back' and (sem_id-1)%2==0:
                     subs=subjects.objects.filter(sem=(sem_id-2)).filter(sub_dept_no=student_dept.student_dept_no)
@@ -1031,7 +1093,7 @@ def no_marks(enroll=''):
 
 
 
-
+#helper function to update the result ic case of backlog
 def back_result(enroll=''):
     result_obj=result.objects.get(result_enroll_no=enroll)
     student_obj=student.objects.get(enroll_no=enroll)
@@ -1141,7 +1203,7 @@ def back_result(enroll=''):
                     result.objects.filter(result_enroll_no=enroll).update(ogpa=sem_8)
 
 
-
+#helper function to get the details to be written on the marsheet
 def marksheet(enroll='',sem_id=''):
                     stu=student.objects.get(enroll_no=enroll)
                     field_name_dept='student_dept_no'
