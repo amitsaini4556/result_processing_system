@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+#department table
 class department(models.Model):
     dept_no=models.IntegerField(primary_key=True)
     dept_name=models.TextField(max_length=50)
@@ -8,7 +8,7 @@ class department(models.Model):
     def __str__(self):
         return str(self.dept_name) +" ( " + str(self.dept_no)+ " )"
 
-
+#student table
 class student(models.Model):
     enroll_no=models.TextField(primary_key=True,max_length=20)
     student_dept_no=models.ForeignKey(department,on_delete=models.CASCADE)
@@ -25,7 +25,7 @@ class student(models.Model):
 
 
 
-
+#scheme table
 class scheme(models.Model):
     scheme_no=models.IntegerField(primary_key=True)
     theory_cr=models.IntegerField()
@@ -47,7 +47,7 @@ class scheme(models.Model):
 
 
 
-
+#subjects table
 class subjects(models.Model):
     sub_no=models.TextField(primary_key=True,max_length=20)
     sub_name=models.TextField(max_length=50,default="name")
@@ -70,7 +70,7 @@ class subjects(models.Model):
 
 
 
-
+#marks table
 class marks(models.Model):
     marks_enroll_no=models.ForeignKey(student,on_delete=models.CASCADE)
     marks_sub_no=models.ForeignKey(subjects,on_delete=models.CASCADE)
@@ -86,7 +86,8 @@ class marks(models.Model):
         return str(self.marks_enroll_no) +" ( " + str(self.marks_sub_no)+ " )"
     class Meta:
         unique_together = (('marks_enroll_no', 'marks_sub_no'),)
-
+        
+#backlog table
 class backlog(models.Model):
     back_enroll_no=models.ForeignKey(student,on_delete=models.CASCADE)
     back_sub_no=models.ForeignKey(subjects,on_delete=models.PROTECT)
@@ -101,7 +102,8 @@ class backlog(models.Model):
         return str(self.back_enroll_no) +" ( " + str(self.back_sub_no)+ " ) " + str(self.status)
     class Meta:
         unique_together = (('back_enroll_no', 'back_sub_no'),)
-
+        
+#result table
 class result(models.Model):
     result_enroll_no=models.ForeignKey(student,on_delete=models.CASCADE)
     sem1=models.FloatField(default=0)
