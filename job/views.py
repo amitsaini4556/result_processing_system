@@ -320,8 +320,9 @@ def marks_form(request):
                                 messages.error(request,'BackLog subject updated for current student')
 
 
-                        #marks already exists
+                        #marks not present in marks table 
                         else:
+                                #marks already exists
                                 if marks.objects.filter(marks_sub_no=request.POST['marks_sub_no']).filter(marks_enroll_no=request.POST['marks_enroll_no']).exists():
                                     messages.error(request,'Marks Already Uploaded!!')
                                     return redirect(home,error_message="Marks Already Uploaded!!")
@@ -560,10 +561,10 @@ def result_form(request):
         if student.objects.filter(enroll_no=request.POST['result_enroll']).exists():
                 stud2d=student.objects.get(enroll_no=request.POST['result_enroll'])
             
-                #if student is of D2D and semester enterred if 1 or 2 the show error
+                #if student is of D2D and enterred semester 1 or 2 then show error
                 if str(stud2d.d2d)=='Yes' and (str(request.POST['Sem'])=='1' or str(request.POST['Sem'])=='2'):
-                    messages.error(request,'Deploma Student')
-                    return redirect(home,error_message="Deploma Student")
+                    messages.error(request,'Diploma Student')
+                    return redirect(home,error_message="Diploma Student")
             
                  #if the student is not D2D or is D2D with sem greater than 2
                 #if the result is alredy computed and stored int the table then
