@@ -1094,7 +1094,7 @@ def no_marks(enroll=''):
 
 
 
-#helper function to update the result ic case of backlog
+#helper function to update the result in case of backlog
 def back_result(enroll=''):
     result_obj=result.objects.get(result_enroll_no=enroll)
     student_obj=student.objects.get(enroll_no=enroll)
@@ -1117,6 +1117,7 @@ def back_result(enroll=''):
         sem_id=8
 
     id=0
+    #use for D2D students  
     if str(student_obj.d2d)=='Yes':
         id=3
     else:
@@ -1204,7 +1205,7 @@ def back_result(enroll=''):
                     result.objects.filter(result_enroll_no=enroll).update(ogpa=sem_8)
 
 
-#helper function to get the details to be written on the marsheet
+#helper function to get the details to be written on the marksheet
 def marksheet(enroll='',sem_id=''):
                     stu=student.objects.get(enroll_no=enroll)
                     field_name_dept='student_dept_no'
