@@ -186,7 +186,7 @@ def marks_form(request):
 
 
 #if the student has backlog in the entered subject then update the marks of the student
-                        if backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).filter(back_sub_no=request.POST['marks_sub_no']).filter(status__contains='Back').exists() 
+                        if backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no']).filter(back_sub_no=request.POST['marks_sub_no']).filter(status__contains='Back').exists(): 
     
                                 #get the student entry from the backlog table
                                 back_obj_enroll=backlog.objects.filter(back_enroll_no=request.POST['marks_enroll_no'])
